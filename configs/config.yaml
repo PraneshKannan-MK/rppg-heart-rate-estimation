@@ -1,0 +1,65 @@
+# ============================================================
+# MR-NIRP Heart Rate Estimation — Config
+# ============================================================
+
+data:
+  dataset_root: "./data/MR-NIRP-Car"   # Path to downloaded dataset
+  img_size: 64                          # ROI resize target (H x W)
+  clip_len: 128                         # Frames per training clip (128@30fps ≈ 4.3s)
+  stride: 64                            # Sliding window stride (50% overlap)
+  nir_fps: 30                           # NIR camera frame rate
+  pulseox_fps: 60                       # Pulse oximeter sample rate
+  hr_min: 45                            # Min valid HR (BPM)
+  hr_max: 150                           # Max valid HR (BPM)
+
+  # Conditions to USE (exclude large_motion — original paper excluded these)
+  valid_conditions:
+    - "still_940"
+    - "still_975"
+    - "small_motion_940"
+    - "small_motion_975"
+
+  # Subject split — Subject2 and Subject16 are same person!
+  # Never put both in train and test
+  train_subjects:
+    - "Subject1"
+    - "Subject3"
+    - "Subject4"
+    - "Subject5"
+    - "Subject6"
+    - "Subject7"
+    - "Subject8"
+    - "Subject9"
+    - "Subject10"
+    - "Subject11"
+    - "Subject12"
+    - "Subject13"
+  val_subjects:
+    - "Subject14"
+    - "Subject15"
+    - "Subject17"
+    - "Subject18"
+  test_subjects:
+    - "Subject19"
+    - "Subject2"    # Subject2 & Subject16 are same person — use only Subject2 for test
+    # Subject16 intentionally excluded from test (same as Subject2)
+
+model:
+  in_channels: 1           # Grayscale NIR — single channel
+  base_filters: 32         # Base number of conv filters
+  dropout: 0.3
+
+training:
+  epochs: 50
+  batch_size: 8
+  lr: 1e-3
+  weight_decay: 1e-4
+  grad_clip: 1.0
+  device: "cuda"           # Falls back to cpu if cuda unavailable
+  num_workers: 4
+  save_dir: "./outputs/checkpoints"
+  log_dir: "./outputs/logs"
+
+evaluation:
+  metrics: ["MAE", "RMSE", "Pearson_r"]
+  results_dir: "./outputs/results"
