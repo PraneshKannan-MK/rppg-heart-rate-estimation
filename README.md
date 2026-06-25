@@ -282,7 +282,7 @@ Training MAE is reported as the primary metric.
 
 ## Citation
 
-If you use this code, please cite the MR-NIRP dataset paper:
+MR-NIRP dataset paper I used:
 
 ```bibtex
 @article{NowaraDriving,
