@@ -1,0 +1,92 @@
+=================================================================
+  MR-NIRP rPPG PROJECT — TEST REPORT
+  Generated: 2026-06-25 12:23:58
+=================================================================
+
+
+=================================================================
+  1. Ground Truth Preprocessing (gt_preprocessing.py)
+=================================================================
+  > Clean sine → BPM accuracy < 1 BPM                       PASS  (1ms)
+  > Noisy signal → BPM accuracy < 3 BPM                     PASS  (0ms)
+  > Multiple BPM values (50–130) within 2 BPM               PASS  (5ms)
+  > Short segment raises ValueError                         PASS  (0ms)
+  > Bandpass output shape matches input                     PASS  (0ms)
+  > Bandpass removes DC component                           PASS  (2ms)
+  > FPS computed correctly (tolerance ±0.1 Hz)              PASS  (0ms)
+  > Window BPM in valid range [45–150]                      PASS  (1ms)
+  > BPM always in valid HR range                            PASS  (3ms)
+
+=================================================================
+  2. Face ROI & Frame Loading (face_roi.py)
+=================================================================
+  > ROI output shape (64,64) float32                        PASS  (174ms)
+  > ROI pixel values in [0, 1]                              PASS  (54ms)
+  > ROI extractor reset clears state                        PASS  (11ms)
+  > ROI works for sizes 32, 64, 128                         PASS  (154ms)
+  > load_clip_from_arrays → (T, H, W) float32               PASS  (67ms)
+  > PGM parser: 8-bit format                                PASS  (0ms)
+  > PGM parser: 16-bit format (dataset format)              PASS  (0ms)
+  > ROI handles all-black frame                             PASS  (10ms)
+  > ROI handles all-white frame                             PASS  (11ms)
+
+=================================================================
+  3. PhysNet Model (model.py)
+=================================================================
+  > Forward pass output shape (B,)                          PASS  (24ms)
+  > Single sample batch works                               PASS  (26ms)
+  > Output is not NaN or Inf                                PASS  (21ms)
+  > Parameter count in reasonable range                     PASS  (12ms)
+  > Gradients flow through all layers                       PASS  (82ms)
+  > Loss decreases over 10 gradient steps                   PASS  (1785ms)
+  > Works for clip_len 64, 128, 256                         PASS  (70ms)
+  > ConvBnRelu3D block output shape correct                 PASS  (2ms)
+  > Train mode and eval mode both work                      PASS  (27ms)
+
+=================================================================
+  4. Evaluation Metrics (evaluate.py)
+=================================================================
+  > Perfect predictions: MAE=0, r=1                         PASS  (1ms)
+  > Known values: MAE and RMSE correct                      PASS  (0ms)
+  > Pearson r always in [-1, 1]                             PASS  (2ms)
+  > All required metric keys present                        PASS  (1ms)
+  > N equals number of samples                              PASS  (0ms)
+  > plot_results creates PNG file                           PASS  (380ms)
+
+=================================================================
+  5. Dataset & DataLoader (dataset.py)
+=================================================================
+  > Train/Val/Test subjects fully disjoint                  PASS  (0ms)
+  > Subject16 not in test set                               PASS  (0ms)
+  > Subject16 not in train set                              PASS  (0ms)
+  > find_sessions on missing path returns []                PASS  (0ms)
+  > No duplicate subjects across all splits                 PASS  (0ms)
+
+=================================================================
+  6. Integration — Full Mini Pipeline (no dataset needed)
+=================================================================
+  > Full pipeline: frames -> ROI -> model -> BPM            PASS  (238ms)
+  > One training step updates parameters                    PASS  (60ms)
+  > GT BPM values valid as model targets                    PASS  (1ms)
+
+=================================================================
+  7. Saved Checkpoints & Training Results
+=================================================================
+  > Checkpoints folder has .pth files                       PASS  (0ms)
+  > epoch_050.pth loads into PhysNet                        PASS  (399ms)
+  > training_results.json valid structure                   PASS  (0ms)
+  > Loss improved > 50% over training                       PASS  (0ms)
+  > All 3 plot PNGs exist                                   PASS  (2ms)
+
+=================================================================
+  TEST RESULTS
+=================================================================
+  Run date  : 2026-06-25 12:23:58
+  Total     : 46
+  Passed    : 46
+  Failed    : 0
+  Skipped   : 0
+  Pass rate : 100.0%
+
+  All tests passed! Project is submission-ready.
+=================================================================
