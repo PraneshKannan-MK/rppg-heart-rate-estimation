@@ -260,13 +260,8 @@ With all 19 subjects downloaded:
 
 ## 8. Next Steps
 
-1. Download remaining subjects (Subject4-19) to get full MAE/RMSE/Pearson r metrics
+1. Download remaining subjects (Subject4-19) to get full MAE/RMSE/Pearson r metrics (as of now done because of my system compute)
 2. Add GPU support for faster training and hyperparameter search
-3. Try PPG waveform prediction approach (predict signal, extract BPM post-hoc)
-4. Experiment with larger base_filters (64 instead of 32) for more capacity
-5. Add data augmentation: temporal jitter, brightness variation
-6. Implement leave-one-subject-out cross-validation for unbiased evaluation
-7. Compare against classical baselines (CHROM, POS) on the same clips
 
 ---
 
